@@ -1,0 +1,11 @@
+.titulo{
+    color:rgb(19, 19, 248);
+    text-align: center;
+}
+
+.img{
+    width: 500px;
+    height: 300px;
+    display: block;
+    margin: 0 auto;
+}
