@@ -1,0 +1,18 @@
+.textos1{
+   font-weight: bold !important;
+}
+
+.imagem{
+    background-image: url(https://lumiere-a.akamaihd.net/v1/images/stitch-rasgando-papel-1920x1080_234e1a3f.png);
+    background-repeat: no-repeat;
+     width: 50vh;
+    min-height: 50vh;
+    background-size: cover; 
+    background-position:center;
+}
+
+
+
+.text-decorator-none{
+    text-decoration: none;
+}
