@@ -7,16 +7,30 @@ import { buscaId, deleteId } from '../../../services/Service';
 import { useNavigate, useParams} from 'react-router-dom';
 import useLocalStorage from 'react-use-localstorage';
 import Tema from '../../../models/Tema';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { TokenState } from '../../../store/tokens/tokensReducer';
 
 function DeletarPostagem() {
   let navigate = useNavigate();
   const { id } = useParams<{id: string}>();
-  const [token, setToken] = useLocalStorage('token');
+  const token = useSelector<TokenState, TokenState["tokens"]>(
+    (state) => state.tokens
+  );
   const [post, setPosts] = useState<Postagem>()
 
   useEffect(() => {
       if (token == "") {
-          alert("Você precisa estar logado")
+        toast.error('Você precisa estar logado', {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          theme: "colored",
+          progress: undefined,
+      });
           navigate("/login")
   
       }
@@ -43,7 +57,16 @@ function DeletarPostagem() {
               'Authorization': token
             }
           });
-          alert('Postagem deletada com sucesso');
+          toast.success('Postagem deletada com sucesso', {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            theme: "colored",
+            progress: undefined,
+        });
         }
       
         function nao() {
@@ -51,37 +74,37 @@ function DeletarPostagem() {
         }
 return (
   <>
-    <Box m={2}>
-      <Card variant="outlined" >
-        <CardContent>
-          <Box justifyContent="center">
-            <Typography color="textSecondary" gutterBottom>
-              Deseja deletar a Postagem:
-            </Typography>
-            <Typography color="textSecondary" >
-            {post?.titulo}
-            </Typography>
-          </Box>
+     <Box m={2}>
+        <Card variant="outlined" >
+          <CardContent>
+            <Box justifyContent="center">
+              <Typography color="textSecondary" gutterBottom>
+                Deseja deletar a Postagem:
+              </Typography>
+              <Typography color="textSecondary" >
+              {post?.titulo}
+              </Typography>
+            </Box>
 
-        </CardContent>
-        <CardActions>
-          <Box display="flex" justifyContent="start" ml={1.0} mb={2} >
-            <Box mx={2}>
-            <Button onClick={sim} variant="contained" className="marginLeft" size='large' color="primary">
-              Sim
-            </Button>
+          </CardContent>
+          <CardActions>
+            <Box display="flex" justifyContent="start" ml={1.0} mb={2} >
+              <Box mx={2}>
+              <Button onClick={sim} variant="contained" className="marginLeft" size='large' color="primary">
+                Sim
+              </Button>
+              </Box>
+              <Box>
+              <Button onClick={nao} variant="contained" size='large' color="secondary">
+                Não
+              </Button>
+              </Box>
             </Box>
-            <Box>
-            <Button onClick={nao} variant="contained" size='large' color="secondary">
-              Não
-            </Button>
-            </Box>
-          </Box>
-        </CardActions>
-      </Card>
-    </Box>
+          </CardActions>
+        </Card>
+      </Box>
   </>
 );
 }
 
-    export default DeletarPostagem;
+export default DeletarPostagem;
